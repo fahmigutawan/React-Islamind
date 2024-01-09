@@ -9,7 +9,7 @@ import _ from "lodash";
 import axios from "axios";
 import {useNavigate} from "react-router-dom";
 
-export const BuatPostingan = () => {
+export const LihatPostingan = () => {
     //BAD PRACTICE
     const token = localStorage.getItem('token') ?? ''
     const navigate = useNavigate()

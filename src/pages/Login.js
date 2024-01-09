@@ -2,7 +2,7 @@ import {NavLink, useNavigate} from "react-router-dom";
 import ic_landscape from './../asset/images/ic_landscape.png'
 import ic_islamind from './../asset/images/ic_islamind.png'
 import {Button, Checkbox, FormControlLabel, Link, TextField} from "@mui/material";
-import {useState} from "react";
+import {useEffect, useState} from "react";
 import toast from "react-hot-toast";
 import axios from "axios";
 import _ from "lodash";
@@ -14,6 +14,12 @@ export const Login = () => {
     //REAL FROM HERE
     const [email, setEmail] = useState()
     const [password, setPassword] = useState()
+
+    useEffect(() => {
+        if(!_.isEmpty(localStorage.getItem('token'))) {
+            navigate('/home')
+        }
+    }, [])
     const login = async () => {
         if (_.isEmpty(email)) {
             return toast.error('Masukkan email yang benar')
