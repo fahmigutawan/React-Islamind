@@ -1,6 +1,6 @@
-import {Toolbar} from "../components/Toolbar";
+import { Toolbar } from "../components/Toolbar";
 import InfiniteScroll from "react-infinite-scroll-component";
-import {useEffect, useState} from "react";
+import { useEffect, useState } from "react";
 import axios from "axios";
 import {
     Button,
@@ -32,7 +32,7 @@ export const Home = () => {
     })
 
     const handleLihat = (item) => {
-        toast.error('Fitur ini belum tersedia')
+        // toast.error('Fitur ini belum tersedia')
     }
 
     const handleEdit = (item) => {
@@ -79,7 +79,7 @@ export const Home = () => {
             })
     }
 
-    const StyledTableCell = styled(TableCell)(({theme}) => ({
+    const StyledTableCell = styled(TableCell)(({ theme }) => ({
         [`&.${tableCellClasses.head}`]: {
             backgroundColor: 'rgba(28, 160, 148, 0.15)',
             color: theme.palette.common.black,
@@ -89,7 +89,7 @@ export const Home = () => {
         },
     }));
 
-    const StyledTableRow = styled(TableRow)(({theme}) => ({
+    const StyledTableRow = styled(TableRow)(({ theme }) => ({
         '&:nth-of-type(odd)': {
             backgroundColor: theme.palette.action.white,
         },
@@ -100,7 +100,7 @@ export const Home = () => {
     }));
 
     return (<div className=' h-screen'>
-        <Toolbar/>
+        <Toolbar />
         <InfiniteScroll
             className='p-[32px]'
             dataLength={list.length}
@@ -109,7 +109,7 @@ export const Home = () => {
             next={fetchNextPage}
         >
             <TableContainer className='rounded-2xl' component={Paper}>
-                <Table sx={{minWidth: 350}} aria-label="a dense table">
+                <Table sx={{ minWidth: 350 }} aria-label="a dense table">
                     <TableHead>
                         <TableRow>
                             <StyledTableCell align="center">
@@ -130,13 +130,13 @@ export const Home = () => {
                         {list.map((row) => {
                             return <StyledTableRow
                                 key={row.id}
-                                sx={{'&:last-child td, &:last-child th': {border: 0}}}
+                                sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
                             >
                                 <StyledTableCell align="left">
                                     <p className='mx-[16px] line-clamp-3'>{row.title}</p>
                                 </StyledTableCell>
                                 <StyledTableCell align="left">
-                                    <div className='mx-[16px] line-clamp-3' dangerouslySetInnerHTML={{__html: row.content}}/>
+                                    <div className='mx-[16px] line-clamp-3' dangerouslySetInnerHTML={{ __html: row.content }} />
                                 </StyledTableCell>
                                 <StyledTableCell align="center">
                                     <div className='flex gap-[8px] justify-center'>
@@ -155,9 +155,9 @@ export const Home = () => {
                                         variant="contained"
                                         aria-label="Disabled elevation buttons"
                                     >
-                                        <Button onClick={() => {handleLihat(row)}}>Lihat</Button>
-                                        <Button onClick={() => {handleEdit(row)}}>Edit</Button>
-                                        <Button onClick={() => {handleRemove(row)}}>Hapus</Button>
+                                        <Button href={`/lihat?id=${row.id}`}>Lihat</Button>
+                                        <Button onClick={() => { handleEdit(row) }}>Edit</Button>
+                                        <Button onClick={() => { handleRemove(row) }}>Hapus</Button>
                                     </ButtonGroup>
                                 }</StyledTableCell>
                             </StyledTableRow>
