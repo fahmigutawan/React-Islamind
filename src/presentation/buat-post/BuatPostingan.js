@@ -3,18 +3,15 @@ import ReactQuill from "react-quill";
 import {useEffect, useState} from "react";
 import 'react-quill/dist/quill.snow.css';
 import {Button, FormControl, InputLabel, MenuItem, Select, TextField} from "@mui/material";
-import ic_islamind_green from './../asset/images/ic_islamind_green.png'
+import ic_islamind_green from './../../asset/images/ic_islamind_green.png'
 import toast from "react-hot-toast";
 import _ from "lodash";
 import axios from "axios";
 import {useNavigate} from "react-router-dom";
 
 export const BuatPostingan = () => {
-    //BAD PRACTICE
     const token = localStorage.getItem('token') ?? ''
     const navigate = useNavigate()
-
-    //REAL FROM HERE
     const [text, setText] = useState('')
     const [kategori, setKategori] = useState('')
     const [kategoriFromApi, setKategoriFromApi] = useState([])
@@ -26,7 +23,6 @@ export const BuatPostingan = () => {
     useEffect(() => {
         axios.get('https://devel0-filkom.ub.ac.id/tag')
             .then(res => {
-                console.log(res.data?.data)
                 setKategoriFromApi(res.data?.data)
             })
     }, [])

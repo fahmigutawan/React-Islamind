@@ -4,16 +4,14 @@ import ic_islamind from './../asset/images/ic_islamind.png'
 import {Button, Checkbox, FormControlLabel, Link, TextField} from "@mui/material";
 import {useEffect, useState} from "react";
 import toast from "react-hot-toast";
-import axios from "axios";
 import _ from "lodash";
+import { AuthRepo } from "../repo/AuthRepo";
 
 export const Login = () => {
-    //BAD CASE
     const navigate = useNavigate()
-
-    //REAL FROM HERE
     const [email, setEmail] = useState()
     const [password, setPassword] = useState()
+    const [ingatSaya, setIngatSaya] = useState()
 
     useEffect(() => {
         if(!_.isEmpty(localStorage.getItem('token'))) {
@@ -30,16 +28,16 @@ export const Login = () => {
         }
 
         try {
-            const res = await axios.post('https://devel0-filkom.ub.ac.id/auth/login', {
-                username: email,
-                password: password
-            })
+            const res = await AuthRepo.login(email, password)
 
-            localStorage.setItem('token', res.data?.data?.token)
+            if (ingatSaya) {
+                AuthRepo.setLocalToken(res.data?.data?.token)
+            } else {
+                AuthRepo.setSessionToken(res.data?.data?.token)
+            }
             navigate('/home')
             return toast.success('Berhasil')
         } catch (err) {
-            console.log(err)
             return toast.error('Error while logging in')
         }
     }
@@ -71,7 +69,12 @@ export const Login = () => {
                     </div>
 
                     <div className='w-full flex justify-between items-center'>
-                        <FormControlLabel control={<Checkbox/>} label={'Ingat Saya'}/>
+                        <FormControlLabel
+                            control={<Checkbox />}
+                            label={'Ingat Saya'}
+                            onChange={(_, checked) => { setIngatSaya(checked) }}
+                            checked={ ingatSaya }
+                        />
                         <Link className='cursor-pointer'>Lupa kata sandi?</Link>
                     </div>
 

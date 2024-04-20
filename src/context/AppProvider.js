@@ -1,16 +1,11 @@
 
-import {createContext} from "react";
-import {Repository} from "../repo/Repository";
+import { createContext } from "react";
 
-export const AppContext = createContext({
-    repository: new Repository()
-});
+export const AppContext = createContext();
 
-export default function AppProvider({children}) {
-    const repo = new Repository()
-
+export default function AppProvider({ children }) {
     return (
-        <AppContext.Provider value={{repository: repo}}>
+        <AppContext.Provider value={{}}>
             {children}
         </AppContext.Provider>
     );
