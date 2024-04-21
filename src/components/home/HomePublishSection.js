@@ -4,7 +4,7 @@ import { StyledTableCell, StyledTableRow } from "../../presentation/home-post/Ho
 import { AksiButtonSection } from "./AksiButtonSection"
 import _ from "lodash"
 
-export function HomeDraftSection({
+export function HomePublishSection({
     list = [],
     tags = [],
     endOfPagination,

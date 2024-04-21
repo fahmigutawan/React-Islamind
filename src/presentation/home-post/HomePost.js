@@ -19,6 +19,7 @@ import { HomeDraftSection } from "../../components/home/HomeDraftSection";
 import { useEffect, useState } from "react";
 import _ from "lodash";
 import { TagRepo } from "../../repo/TagRepo";
+import { HomePublishSection } from "../../components/home/HomePublishSection";
 
 export const StyledTableCell = styled(TableCell)(({ theme }) => ({
     [`&.${tableCellClasses.head}`]: {
@@ -39,7 +40,7 @@ export const StyledTableRow = styled(TableRow)(({ theme }) => ({
     },
 }));
 
-export const Home = () => {
+export const HomePost = () => {
     const [listDraft, setListDraft] = useState([])
     const [listPublish, setListPublish] = useState([])
     const [paginationDraft, setPaginationDraft] = useState(
@@ -66,10 +67,20 @@ export const Home = () => {
             tags={tags}
             endOfPagination={paginationDraft.next_page == null}
             onFetchNextPage={() => { fetchNextPage(paginationDraft.next_page) }}
+        />,
+        <HomePublishSection
+            list={listPublish}
+            tags={tags}
+            endOfPagination={paginationPublish.next_page == null}
+            onFetchNextPage={() => { fetchNextPage(paginationPublish.next_page) }}
         />
     ]
     const fetchNextPage = (page) => {
         if (page != null) {
+            if (page == 1) {
+                setListDraft([])
+                setListPublish([])
+            }
             PostRepo.getAllPostAdminByPage(page)
                 .then(res => {
                     switch (selectedTab) {
@@ -111,9 +122,35 @@ export const Home = () => {
     }
 
     useEffect(() => {
-        fetchNextPage(1)
         getAllTag()
     }, [])
+
+    useEffect(() => {
+        switch (selectedTab) {
+            case 0:
+                setPaginationDraft(
+                    {
+                        current_page: 1,
+                        max_page: 1,
+                        next_page: 1,
+                        prev_page: 1
+                    }
+                )
+                break
+            case 1:
+                setPaginationPublish(
+                    {
+                        current_page: 1,
+                        max_page: 1,
+                        next_page: 1,
+                        prev_page: 1
+                    }
+                )
+                break
+        }
+
+        fetchNextPage(1)
+    }, [selectedTab])
 
     return (
         <div className=' h-screen'>
